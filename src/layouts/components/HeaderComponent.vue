@@ -3,7 +3,7 @@
         <nav>
             <span class="toggleMenu far fa-bars"></span>
             <span class="logo">
-                <img src="@/assets/images/logo.svg" alt="">
+                <img :src="require('@/assets/images/logo.svg')" alt="">
             </span>
         </nav>
     </header>   

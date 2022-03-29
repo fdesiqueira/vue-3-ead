@@ -11,14 +11,25 @@
 </template>
 
 <script>
-import HeaderComponent from '@/layouts/components/HeaderComponent'
-import FooterComponent from '@/layouts/components/FooterComponent.vue'
 
-export default {
-    name: 'DefaultTemplate',
-    components: {
-        HeaderComponent,
-        FooterComponent,
+    import HeaderComponent from '@/layouts/components/HeaderComponent'
+    import FooterComponent from '@/layouts/components/FooterComponent.vue'
+    import { onBeforeMount } from '@vue/runtime-core'
+
+    export default {
+        name: 'DefaultTemplate',
+        setup() {
+            onBeforeMount(() => {
+                document.body.classList.add('page')
+                document.body.classList.add('dark')
+
+                document.title = "Escola EAD de Desenvolvimento de Software "
+            }) 
+        },
+        components: {
+            HeaderComponent,
+            FooterComponent,
+        }
     }
-}
+
 </script>
