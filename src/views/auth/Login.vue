@@ -49,12 +49,13 @@
                                 <input type="password" name="password" placeholder="Senha" required>
                                 <i class="far fa-eye buttom"></i>
                             </div>
-                            <button class="btn primary" type="submit">Login</button>
+                            <button class="btn primary" type="submit" @click.prevent="login">Login</button>
                         </form>
                         <span>
                             <p class="fontSmall">
                                 Esqueceu sua senha? 
-                                <a href="/recuperar-senha" class="link primary">Clique aqui</a>
+                                <!-- <a href="/recuperar-senha" class="link primary">Clique aqui</a> -->
+                                <router-link :to="{name : 'forgot.password'}" class="link primary">Clique aqui</router-link>
                             </p>
                         </span>
                     </div>
@@ -68,10 +69,18 @@
 </template>
 
 <script>
+    import router from "@/router/index"
+
     export default {
 
-    // eslint-disable-next-line vue/multi-word-component-names
-    name: 'Login'
-
+        // eslint-disable-next-line vue/multi-word-component-names
+        name: 'Login',
+        setup() {
+            const login = () => router.push({ name : 'campus.home' })
+            return {
+                login                
+            }
+        }
     }
+
 </script>

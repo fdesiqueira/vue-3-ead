@@ -48,7 +48,8 @@
                         </form>
                         <span>
                             <p class="fontSmall">Acessar 
-                                <a href="/" class="link primary">Clique aqui</a>
+                                <!-- <a href="/" class="link primary">Clique aqui</a> -->
+                                <router-link :to="{name : 'login'}" class="link primary">Clique aqui</router-link>                            
                             </p>
                         </span>
                     </div>
