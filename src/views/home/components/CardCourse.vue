@@ -9,7 +9,8 @@
                     </span>
                     <span class="title">{{ title }}</span>
                     <span class="action">
-                        <a href="trainings.html" class="btn laravel">Acessar</a>
+                        <!-- <a href="trainings.html" class="btn laravel">Acessar</a> -->
+                        <router-link to="/campus/modulos" class="btn laravel">Acessar</router-link>
                     </span>
                 </span>
                 <span class="dots">
