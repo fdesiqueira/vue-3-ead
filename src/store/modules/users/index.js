@@ -1,3 +1,5 @@
+import AuthService from "@/services/AuthService"
+
 export default {
 
     state: {
@@ -28,6 +30,10 @@ export default {
     },
 
     actions: {
+        auth({ state }, params) {
+            console.log(state)
+            AuthService.auth(params)
+        }
 
     }
 

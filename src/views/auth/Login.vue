@@ -49,7 +49,7 @@
                                 <input type="password" name="password" placeholder="Senha" required>
                                 <i class="far fa-eye buttom"></i>
                             </div>
-                            <button class="btn primary" type="submit" @click.prevent="login">Login</button>
+                            <button class="btn primary" type="submit" @click.prevent="auth">Login</button>
                         </form>
                         <span>
                             <p class="fontSmall">
@@ -69,16 +69,26 @@
 </template>
 
 <script>
-    import router from "@/router/index"
+    import { useStore } from "vuex"
 
     export default {
 
         // eslint-disable-next-line vue/multi-word-component-names
         name: 'Login',
         setup() {
-            const login = () => router.push({ name : 'campus.home' })
+
+            const store = useStore()
+            const auth = () => {
+                store.dispatch('auth', {
+                    email: 'fdesiqueira.ti@gmail.com',
+                    password: 'admin123',
+                    device_name : 'iphone'
+                })
+
+            }
+
             return {
-                login                
+                auth,               
             }
         }
     }
