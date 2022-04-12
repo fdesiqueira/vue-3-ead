@@ -31,7 +31,7 @@ export default {
             },
             params) {
             state.loggedIn = false;
-            AuthService.auth(params);
+            return AuthService.auth(params);
         }
     }
 
