@@ -42,9 +42,19 @@
                         <form action="/dist/index.html" method="">
                             <div class="groupForm">
                                 <i class="far fa-envelope"></i>
-                                <input type="email" name="email" placeholder="Email" required>
+                                <input type="email" name="email" v-model="email" placeholder="Email" required>
                             </div>                                
-                            <button class="btn primary" type="submit">Recuperar Senha</button>
+                            <!-- <button class="btn primary" type="submit">Recuperar Senha</button> -->
+                             <button :class="[
+                                            'btn',
+                                            'primary',
+                                            'loading' ? 'loading' : ''
+                                ]"
+                                type="submit" 
+                                @click.prevent="forgotPassword">
+                                <span v-if="loading">Recuperando...</span>
+                                <span v-else>Recuperar Senha</span>
+                            </button>
                         </form>
                         <span>
                             <p class="fontSmall">Acessar 
@@ -63,10 +73,33 @@
 </template>
 
 <script>
+    /* eslint-disable */
+    import { ref } from "vue"
+    import { useStore } from "vuex"
+    import router from "@/router"
+
     export default {
+        name: 'ForgotPassword',
+        setup() {
+            const store = new useStore()
+            const email = ref('email')
+            const loading = ref(false)
 
-    // eslint-disable-next-line vue/multi-word-component-names
-    name: 'ForgotPassword'
+            const forgotPassword = () => {
+                loading.value = true
+                store
+                    .dispatch('forgetPassword', { email: email.value })
+                    .then(() => alert('Verifique seu email.')  )
+                    .catch(() => alert('error') )
+                    .finally(() => loading.value = false )                  
+            }             
 
+            return {
+                forgotPassword,
+                email,
+                loading,  
+            }
+        }
     }
+
 </script>

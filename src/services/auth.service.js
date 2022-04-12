@@ -3,7 +3,6 @@ import { TOKEN_NAME } from '@/configs';
 
 export default class AuthService extends BaseService {
 
-
     static async auth(params) {
         return new Promise((resolve, reject) => {
             this.request()
