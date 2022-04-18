@@ -81,9 +81,10 @@
     import { useStore } from "vuex"
     import { ref } from "vue"
     import router from "@/router"
+    import { notify } from "@kyvg/vue3-notification";
 
     export default {
-        // eslint-disable-next-line vue/multi-word-component-names
+        /* eslint-disable */ 
         name: 'Auth',
         setup() {
 
@@ -101,8 +102,24 @@
                     password: password.value, //'admin123',
                     device_name : 'vue3_web'
                 })
-                .then(() => router.push( {name: 'campus.home'} ) )
-                .catch(() => alert('error') )
+                .then(() => { 
+                    notify({ 
+                        title: "Autenticação com sucesso",
+                        text: "Acesso autorizado. Bem-vindo ao Site!",
+                        type: 'success'
+                    });
+                    router.push( {name: 'campus.home'} ) 
+                })
+                .catch(error => {   
+                    let mensagem = 'Erro na Autenticação'   
+                    if(error.status === 422) mensagem = 'Credenciais inválidas.'
+                    if(error.status === 404) mensagem = 'Usuário não encontrado'
+                    notify({ 
+                        title: 'Erro na Autenticação',
+                        text: mensagem,
+                        type: 'warn'
+                    });
+                })
                 .finally(() => loading.value = false )
             }
             return {

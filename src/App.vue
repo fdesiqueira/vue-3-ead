@@ -1,4 +1,5 @@
 <template>
+  <notifications />
   <router-view/>
 </template>
 
@@ -8,8 +9,8 @@
 </style>
 
 <style lang="scss">
-@import "@/assets/styles/responsive.scss";
-@import "@/assets/styles/_theme.scss";
-@import "@/assets/styles/_vue.scss";
-@import "@/assets/styles/eti.scss";
+  @import "@/assets/styles/responsive.scss";
+  @import "@/assets/styles/_theme.scss";
+  @import "@/assets/styles/_vue.scss";
+  @import "@/assets/styles/eti.scss";
 </style>

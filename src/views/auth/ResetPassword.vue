@@ -76,6 +76,7 @@
     import { ref } from "vue"
     import router from "@/router"
     import ResetPasswordService from "@/services/password.service"
+    import { notify } from "@kyvg/vue3-notification";
 
     export default {
         name: 'ResetPassword',
@@ -98,8 +99,25 @@
                     password: password.value, //'admin123',
                     token: props.token,               
                 })
-                .then(() => router.push({name: 'auth'}) )
-                .catch(() => alert('error') )
+                .then(() => {
+                    let mensagem = 'Senha atualizada com sucesso!'   
+                     notify({ 
+                        title: 'Recuperação de Senha',
+                        text: mensagem,
+                        type: 'success'
+                    });
+                    router.push({name: 'auth'})
+                })
+                .catch(error => {   
+                    let mensagem = 'Usuário não encontrado para atualização da Senha'   
+                    if(error.status === 422) mensagem = 'Credenciais inválidas.'
+                    if(error.status === 404) mensagem = 'Usuário não encontrado'
+                    notify({ 
+                        title: 'Recuperar minha Senha - Erro',
+                        text: mensagem,
+                        type: 'warn'
+                    });
+                })
                 .finally(() => loading.value = false )                  
             }             
 

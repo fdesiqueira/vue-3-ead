@@ -77,6 +77,7 @@
     import { ref } from "vue"
     import { useStore } from "vuex"
     import router from "@/router"
+    import { notify } from "@kyvg/vue3-notification";
 
     export default {
         name: 'ForgotPassword',
@@ -89,8 +90,22 @@
                 loading.value = true
                 store
                     .dispatch('forgetPassword', { email: email.value })
-                    .then(() => alert('Verifique seu email.')  )
-                    .catch(() => alert('error') )
+                    .then(() => {
+                         let mensagem = 'Verifique sua caixa de email'   
+                         notify({ 
+                                title: 'Esqueci minha Senha',
+                                text: mensagem,
+                                type: 'success'
+                        });
+                    })
+                    .catch(error => {   
+                        let mensagem = 'Erro ao recuperar usuário para envio do email'   
+                        notify({ 
+                                title: 'Esqueci minha Senha - Erro',
+                                text: mensagem,
+                                type: 'warn'
+                        });
+                    })
                     .finally(() => loading.value = false )                  
             }             
 
