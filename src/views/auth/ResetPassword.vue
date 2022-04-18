@@ -43,7 +43,12 @@
                             <div class="groupForm">
                                 <i class="far fa-envelope"></i>
                                 <input type="email" name="email" v-model="email" placeholder="Email" required>
-                            </div>                                
+                            </div>   
+                             <div class="groupForm">
+                                <i class="far fa-key"></i>
+                                <input type="password" name="password" placeholder="Senha" v-model="password" required>
+                                <i class="far fa-eye buttom"></i>
+                            </div>                             
                             <!-- <button class="btn primary" type="submit">Recuperar Senha</button> -->
                              <button :class="[
                                             'btn',
@@ -51,17 +56,11 @@
                                             'loading' ? 'loading' : ''
                                 ]"
                                 type="submit" 
-                                @click.prevent="forgotPassword">
-                                <span v-if="loading">Recuperando...</span>
-                                <span v-else>Recuperar Senha</span>
+                                @click.prevent="resetPassword">
+                                <span v-if="loading">Alterando...</span>
+                                <span v-else>Alterar Senha</span>
                             </button>
                         </form>
-                        <span>
-                            <p class="fontSmall">Acessar 
-                                <!-- <a href="/" class="link primary">Clique aqui</a> -->
-                                <router-link :to="{name : 'auth'}" class="link primary">Clique aqui</router-link>                            
-                            </p>
-                        </span>
                     </div>
                     <span class="copyright fontSmall">
                         Todos os Direitos reservados - <b>Especializati</b>
@@ -75,28 +74,39 @@
 <script>
     /* eslint-disable */
     import { ref } from "vue"
-    import { useStore } from "vuex"
     import router from "@/router"
+    import ResetPasswordService from "@/services/password.service"
 
     export default {
-        name: 'ForgotPassword',
-        setup() {
-            const store = new useStore()
+        name: 'ResetPassword',
+        props: {
+            token : {
+                require: true,
+            }
+        },
+        setup(props) {
+
             const email = ref('email')
+            const password = ref('password')
             const loading = ref(false)
 
-            const forgotPassword = () => {
+            const resetPassword = () => {
                 loading.value = true
-                store
-                    .dispatch('forgetPassword', { email: email.value })
-                    .then(() => alert('Verifique seu email.')  )
-                    .catch(() => alert('error') )
-                    .finally(() => loading.value = false )                  
+
+                ResetPasswordService.resetPassword({
+                    email: email.value,  //'fdesiqueira.ti@gmail.com',
+                    password: password.value, //'admin123',
+                    token: props.token,               
+                })
+                .then(() => router.push({name: 'auth'}) )
+                .catch(() => alert('error') )
+                .finally(() => loading.value = false )                  
             }             
 
             return {
-                forgotPassword,
+                resetPassword,
                 email,
+                password,
                 loading,  
             }
         }

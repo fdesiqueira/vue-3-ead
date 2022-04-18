@@ -1,5 +1,5 @@
 import AuthService from "@/services/auth.service";
-import ResetPasswordService from "@/services/password.reset.service";
+import ResetPasswordService from "@/services/password.service";
 
 export default {
 
