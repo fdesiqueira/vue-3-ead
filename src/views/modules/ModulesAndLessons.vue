@@ -2,7 +2,7 @@
 
     <div>
         <div class="pageTitle">
-            <span class="title">Curso Laravel com Vue.Js</span>
+            <span class="title">{{ course.name }}</span>
             <span class="dots">
                 <span></span>
                 <span></span>
@@ -35,12 +35,22 @@
     import Modules from '@/views/modules/components/Modules.vue'
     import Player from '@/views/modules/components/Player.vue'
     import Supports from '@/views/modules/components/Supports.vue'
+    import { useStore } from 'vuex'
+    import { computed } from 'vue'
 
     export default {
 
         name : 'ModulesAndLessons',
-        components: {
-            
+        setup() {
+            const store = useStore()
+
+            const course = computed(() => store.state.courses.courseSelected)
+
+            return {
+                course
+            }
+        },
+        components: {            
             Modules,
             Player,
             Supports
