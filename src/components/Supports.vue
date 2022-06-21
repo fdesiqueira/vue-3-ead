@@ -55,10 +55,10 @@
                     </div>
                     <div class="commentContent">
                         <span class="avatar">
-                             <img :src="[ support.user.image ? 
-                                     support.user.image :
-                                     require('@/assets/images/avatars/user01.svg')]" 
-                             :alt="support.user.name" />
+                             <img   :src="[ support.user.image ? 
+                                        support.user.image :
+                                        require('@/assets/images/avatars/user01.svg')]" 
+                                    :alt="support.user.name" />
                         </span>
                         <div class="comment">
                             <div class="balloon">
@@ -71,17 +71,25 @@
                         </div>
                     </div>
                     <span class="answer">
-                        <button class="btn primary">Responder</button>
+                        <button class="btn primary" @click.prevent="openModal(support.id)">Responder</button>
                     </span>
                 </div>
             </div>
         </div>
     </div>
+
+    <modal-support
+      :show-modal="modal.showModal"
+      :support-reply="modal.supportReply"
+      @closeModal="modal.showModal = false">
+    </modal-support>
+
 </template>
 
 <script>
     import { useStore } from 'vuex'
     import { computed, ref } from 'vue'
+    import ModalSupport from '@/components/SupportModal.vue'
 
     export default {
         // eslint-disable-next-line vue/multi-word-component-names
@@ -92,11 +100,25 @@
             const supports = computed(() => store.state.supports.supports )
 
             const showSupport = ref('0')
+
+            const modal = ref({
+                showModal: false,
+                supportReply: ''
+            })
+
+            const openModal = (supportId) => {      
+                modal.value = {showModal: true, supportReply: supportId}
+            }
          
             return {
                 supports,
-                showSupport
+                showSupport,
+                modal,
+                openModal
             }
-        }       
+        }, 
+        components: {
+            ModalSupport
+        }      
     }
 </script>

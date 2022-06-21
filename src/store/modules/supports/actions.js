@@ -9,8 +9,18 @@ const actions = {
 
     storeSupport({ commit }, params) {
         return SupportService.storeSupport(params)
-            .then(support => commit('ADD_NEW_SUPPORT', support))
+            .then(response => commit('ADD_NEW_SUPPORT', response.data))
+    },
+
+    storeReplySupport({ commit }, params) {
+        return SupportService.storeReplySupport(params)
+            .then(response => {
+                const data = {
+                    reply: response.data,
+                    supportId: params.support
+                }
+                commit('ADD_NEW_REPLY_TO_SUPPORT', data)
+            })
     }
 }
-
 export default actions

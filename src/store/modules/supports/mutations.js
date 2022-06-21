@@ -1,8 +1,10 @@
 const mutations = {
+
     SET_SUPPORTS(state, supports) {
         // state.supports = supports
         state.supports = Object.assign({}, state.supports, supports)
     },
+
     SET_RESET(state) {
         state.supports = {
             data: [],
@@ -13,8 +15,24 @@ const mutations = {
             }
         }
     },
+
     ADD_NEW_SUPPORT(state, support) {
         state.supports.data.unshift(support)
+    },
+
+    ADD_NEW_REPLY_TO_SUPPORT(state, data) {
+
+        const reply = data.reply
+        const supportId = data.supportId
+        const supports = data.supports.data
+
+        state.supports.forEach((support, index) => {
+            if (support == supportId) {
+                supports[index].replies.push(reply);
+            }
+        })
+
+        state.supports.data = supports
     }
 }
 

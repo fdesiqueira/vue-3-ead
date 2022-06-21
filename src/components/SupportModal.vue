@@ -81,17 +81,22 @@
             lesson: lesson.value.id,
             description: description.value,
             status: 'P',
-            support: props.supportReply
+            support: props.supportReply,
           }
 
-          store.dispatch("storeSupport", params)
-          .then(() => {
-            description.value = ""
+          var actionName = "storeSupport";
+          if(props.supportReply != '') {
+            actionName = 'storeReplySupport';
+          }
 
-            emit('closeModal')
+          store.dispatch(actionName, params)
+          .then(() => {
+            
           })
           .finally(() => {
             loading.value = false
+            description.value = ""
+            emit('closeModal')
           })
         }
         
