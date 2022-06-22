@@ -24,16 +24,16 @@ const mutations = {
 
         const reply = data.reply
         const supportId = data.supportId
-        const supports = data.supports.data
+        const supports = state.supports.data
 
-        state.supports.forEach((support, index) => {
-            if (support == supportId) {
+        supports.forEach((support, index) => {
+            if (support.id == supportId) {
                 supports[index].replies.push(reply);
             }
         })
 
         state.supports.data = supports
-    }
+    },
 }
 
 export default mutations

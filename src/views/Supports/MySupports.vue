@@ -43,17 +43,25 @@
 </template>
 
 <script>
-
-
+    import { onMounted, ref } from 'vue'
+    import { useStore } from 'vuex'
+    
     import Supports from '@/components/Supports.vue'
 
     export default {
+        name : 'MySupports',
+        components: {                     
+            Supports,
+        },
+      setup() {
+        const store = new useStore()
 
-        name : 'ModulesAndLessons',
-        components: {
-                     
-            Supports
-        }
+        const status = ref('')
+
+        onMounted(() => {
+          store.dispatch('getMySupports', status.value)
+        })
+      }
     }
 
 </script>

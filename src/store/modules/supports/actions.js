@@ -21,6 +21,11 @@ const actions = {
                 }
                 commit('ADD_NEW_REPLY_TO_SUPPORT', data)
             })
-    }
+    },
+
+    getMySupports({ commit }, status) {
+        return SupportService.getMySupports(status)
+            .then(response => commit('SET_SUPPORTS', response))
+    },
 }
 export default actions
