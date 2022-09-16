@@ -46,8 +46,8 @@
                             </div>   
                              <div class="groupForm">
                                 <i class="far fa-key"></i>
-                                <input type="password" name="password" placeholder="Senha" v-model="password" required>
-                                <i class="far fa-eye buttom"></i>
+                                <input :type="typePassword" name="password" placeholder="Senha" v-model="password" required>
+                                <i class="far fa-eye buttom" @click="toogleShowPassword()"></i>                               
                             </div>                             
                             <!-- <button class="btn primary" type="submit">Recuperar Senha</button> -->
                              <button :class="[
@@ -91,6 +91,11 @@
             const password = ref('password')
             const loading = ref(false)
 
+            const typePassword = ref('password')
+            const toogleShowPassword = () => {
+                typePassword.value = typePassword.value == 'password' ? 'text' : 'password'
+            }
+
             const resetPassword = () => {
                 loading.value = true
 
@@ -125,7 +130,9 @@
                 resetPassword,
                 email,
                 password,
-                loading,  
+                loading, 
+                typePassword,     
+                toogleShowPassword  
             }
         }
     }

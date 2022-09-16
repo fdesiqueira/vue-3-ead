@@ -4,9 +4,17 @@ import courses from './modules/courses';
 import supports from './modules/supports';
 
 export default createStore({
-    state: {},
+    state: {
+        loading: false,
+        loadingMessage: 'Carregando...aguarde!'
+    },
     getters: {},
-    mutations: {},
+    mutations: {
+        CHANGE_LOADING(state, status, message = 'Carregando...aguarde!') {
+            state.loading = status;
+            state.loadingMessage = message;
+        }
+    },
     actions: {},
     modules: {
         users,

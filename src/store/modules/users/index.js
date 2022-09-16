@@ -27,9 +27,18 @@ export default {
     },
 
     actions: {
+
         auth({ state }, params) {
             state.loggedIn = false;
             return AuthService.auth(params);
+        },
+
+        getMe({ commit }) {
+            commit('CHANGE_LOADING', true);
+
+            AuthService.getMe()
+                .then(response => commit('SET_USER', response.data))
+                .finnaly(() => commit('CHANGE_LOADING', false))
         },
 
         forgetPassword({ state }, params) {
@@ -37,5 +46,4 @@ export default {
             return ResetPasswordService.forgetPassword(params);
         },
     }
-
 }
