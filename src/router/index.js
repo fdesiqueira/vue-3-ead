@@ -6,6 +6,10 @@ import Auth from '@/views/auth/Auth.vue'
 import ForgotPassword from '@/views/auth/ForgotPassword.vue'
 import ResetPassword from '@/views/auth/ResetPassword.vue'
 
+import store from '@/store'
+import { TOKEN_NAME } from '@/configs'
+
+
 const routes = [{
     path: '/campus',
     component: () =>
@@ -54,6 +58,24 @@ const routes = [{
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes
+})
+
+router.beforeEach(async(to, _, next) => {
+    const loggedIn = store.state.users.loggedIn
+    if (to.name != 'reset.password' && !loggedIn) {
+        const token = await localStorage.getItem(TOKEN_NAME)
+        if (!token && to.name != 'auth' && to.name != 'forget.password') {
+            return router.push({ name: 'auth' })
+        }
+
+        await store.dispatch('getMe')
+            .catch(() => {
+                if (to.name != 'auth')
+                    return router.push({ name: 'auth' })
+            })
+    }
+
+    next()
 })
 
 export default router

@@ -38,7 +38,7 @@ export default {
 
             AuthService.getMe()
                 .then(response => commit('SET_USER', response.data))
-                .finnaly(() => commit('CHANGE_LOADING', false))
+                .finally(() => commit('CHANGE_LOADING', false))
         },
 
         forgetPassword({ state }, params) {
